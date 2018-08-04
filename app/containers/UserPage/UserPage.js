@@ -1,5 +1,5 @@
 /*
- * HomePage
+ * UserPage
  *
  * This is the first thing users see of our App, at the '/' route
  */
@@ -11,7 +11,7 @@ import ReposList from 'components/ReposList';
 import MarkdownRenderer from 'react-markdown-renderer';
 import './style.scss';
 
-export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export default class UserPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
    * when initial state username is not null, submit the form to load repos
    */
@@ -61,7 +61,7 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
 
     return (
       <section>
-        <h2>Fetch Github users!</h2>
+        <h2>Fetch Github Repos by username!</h2>
         <form onSubmit={this.onSubmitForm}>
           <label htmlFor="username">
           Show Github repositories by
@@ -87,7 +87,7 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
     return (
       <section>
         <a href={`/${username}`}>
-          Back to {`${username}'s`} repo list
+          Back to {username}&#39;s repo list
         </a>
         <h2>{`${username}'s ${repo}`}</h2>
         <MarkdownRenderer markdown={readmeContent} />
@@ -96,7 +96,7 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
   }
 
   render() {
-    const { readme } = this.props;
+    const { readme, username } = this.props;
     let renderBodyComponent = this.renderReposList();
 
     if (readme) {
@@ -106,7 +106,7 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
     return (
       <article>
         <Helmet>
-          <title>Home</title>
+          <title>{`${username}'s repositories`}</title>
           <meta name="description" content="Github browser and README scraper" />
         </Helmet>
         <div className="home-page">
@@ -121,7 +121,7 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
   }
 }
 
-HomePage.propTypes = {
+UserPage.propTypes = {
   readme: PropTypes.object,
   match: PropTypes.object,
   loading: PropTypes.bool,
