@@ -11,13 +11,7 @@ const makeSelectUsername = () => createSelector(
   (homeState) => homeState.get('username')
 );
 
-const makeSelectRepo = () => createSelector(
-  selectHome,
-  (homeState) => homeState.get('repo')
-);
-
 export {
   selectHome,
-  makeSelectUsername,
-  makeSelectRepo
+  makeSelectUsername
 };

@@ -10,4 +10,3 @@
  */
 
 export const CHANGE_USERNAME = 'oddle/Home/CHANGE_USERNAME';
-export const CHANGE_REPO = 'oddle/Home/CHANGE_REPO';

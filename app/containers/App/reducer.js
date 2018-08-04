@@ -13,6 +13,9 @@
 import { fromJS } from 'immutable';
 
 import {
+  LOAD_USER_LIST_SUCCESS,
+  LOAD_USER_LIST,
+  LOAD_USER_LIST_ERROR,
   LOAD_REPOS_SUCCESS,
   LOAD_REPOS,
   LOAD_REPOS_ERROR,
@@ -26,6 +29,7 @@ const initialState = fromJS({
   loading: false,
   error: false,
   currentUser: false,
+  userList: false,
   userData: {
     repositories: false,
   },
@@ -33,30 +37,47 @@ const initialState = fromJS({
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
+    case LOAD_USER_LIST:
+      return state
+        .set('loading', true)
+        .set('error', false)
+        .setIn(['userList'], false)
+        .setIn(['userData', 'repositories'], false)
+        .setIn(['userData', 'readme'], false);
     case LOAD_REPOS:
       return state
         .set('loading', true)
         .set('error', false)
+        .setIn(['userList'], false)
         .setIn(['userData', 'repositories'], false)
         .setIn(['userData', 'readme'], false);
     case LOAD_README:
       return state
         .set('loading', true)
         .set('error', false)
+        .setIn(['userList'], false)
         .setIn(['userData', 'repositories'], false)
         .setIn(['userData', 'readme'], false);
+    case LOAD_USER_LIST_SUCCESS:
+      return state
+        .set('loading', false)
+        .set('currentUser', action.username)
+        .setIn(['userList'], action.userList);
     case LOAD_REPOS_SUCCESS:
       return state
         .set('loading', false)
         .set('currentUser', action.username)
         .setIn(['userData', 'repositories'], action.repos);
     case LOAD_README_SUCCESS:
-      console.log('readme data', atob(action.readme.content));
       return state
         .setIn(['userData', 'readme'], action.readme)
         .set('loading', false)
         .set('currentUser', action.username)
         .set('currentRepo', action.repo);
+    case LOAD_USER_LIST_ERROR:
+      return state
+        .set('error', action.error)
+        .set('loading', false);
     case LOAD_REPOS_ERROR:
       return state
         .set('error', action.error)

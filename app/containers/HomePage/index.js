@@ -4,14 +4,13 @@ import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import {
-  makeSelectRepos,
-  makeSelectReadme,
+  makeSelectUserList,
   makeSelectLoading,
   makeSelectError
 } from 'containers/App/selectors';
-import { loadRepos, loadReadme } from '../App/actions';
-import { changeUsername, changeRepo } from './actions';
-import { makeSelectUsername, makeSelectRepo } from './selectors';
+import { loadUserList } from '../App/actions';
+import { changeUsername } from './actions';
+import { makeSelectUsername } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import HomePage from './HomePage';
@@ -19,21 +18,14 @@ import HomePage from './HomePage';
 const mapDispatchToProps = (dispatch) => ({
   onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
   onSetUsername: (text) => dispatch(changeUsername(text)),
-  onSetRepo: (text) => dispatch(changeRepo(text)),
   onSubmitForm: (evt) => {
     if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-    dispatch(loadRepos());
-  },
-  onFetchReadme: (evt) => {
-    if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-    dispatch(loadReadme());
+    dispatch(loadUserList());
   }
 });
 
 const mapStateToProps = createStructuredSelector({
-  repos: makeSelectRepos(),
-  readme: makeSelectReadme(),
-  repo: makeSelectRepo(),
+  userList: makeSelectUserList(),
   username: makeSelectUsername(),
   loading: makeSelectLoading(),
   error: makeSelectError()

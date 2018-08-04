@@ -28,6 +28,11 @@ const makeSelectRepos = () => createSelector(
   (globalState) => globalState.getIn(['userData', 'repositories'])
 );
 
+const makeSelectUserList = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.getIn(['userList'])
+);
+
 const makeSelectReadme = () => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['userData', 'readme'])
@@ -40,6 +45,7 @@ const makeSelectLocation = () => createSelector(
 
 export {
   selectGlobal,
+  makeSelectUserList,
   makeSelectCurrentUser,
   makeSelectLoading,
   makeSelectError,

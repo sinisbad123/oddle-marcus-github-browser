@@ -16,6 +16,9 @@
  */
 
 import {
+  LOAD_USER_LIST,
+  LOAD_USER_LIST_SUCCESS,
+  LOAD_USER_LIST_ERROR,
   LOAD_REPOS,
   LOAD_REPOS_SUCCESS,
   LOAD_REPOS_ERROR,
@@ -32,6 +35,17 @@ import {
 export function loadRepos() {
   return {
     type: LOAD_REPOS,
+  };
+}
+
+/**
+ * Load the user list, this action starts the request saga
+ *
+ * @return {object} An action object with a type of LOAD_USER_LIST
+ */
+export function loadUserList() {
+  return {
+    type: LOAD_USER_LIST,
   };
 }
 
@@ -77,6 +91,36 @@ export function reposLoaded(repos, username) {
     type: LOAD_REPOS_SUCCESS,
     repos,
     username,
+  };
+}
+
+/**
+ * Dispatched when the repositories are loaded by the request saga
+ *
+ * @param  {array} users The repository data
+ * @param  {string} username The current username keyword typed
+ *
+ * @return {object}       An action object with a type of LOAD_USER_LIST_SUCCESS passing the repos
+ */
+export function userListLoaded(userList, username) {
+  return {
+    type: LOAD_USER_LIST_SUCCESS,
+    userList,
+    username,
+  };
+}
+
+/**
+ * Dispatched when loading the repositories fails
+ *
+ * @param  {object} error The error
+ *
+ * @return {object}       An action object with a type of LOAD_USER_LIST_ERROR passing the error
+ */
+export function userListLoadingError(error) {
+  return {
+    type: LOAD_USER_LIST_ERROR,
+    error,
   };
 }
 

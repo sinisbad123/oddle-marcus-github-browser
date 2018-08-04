@@ -3,51 +3,30 @@
  */
 
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { LOAD_REPOS, LOAD_README } from 'containers/App/constants';
+import { LOAD_USER_LIST } from 'containers/App/constants';
 import {
-  reposLoaded,
-  repoLoadingError,
-  readmeLoaded,
-  readmeLoadingError
+  userListLoaded,
+  userListLoadingError,
 } from 'containers/App/actions';
 
 import request from 'utils/request';
-import { makeSelectUsername, makeSelectRepo } from 'containers/HomePage/selectors';
+import { makeSelectUsername } from 'containers/HomePage/selectors';
 
 /**
- * Github repos request/response handler
+ * Github user list request/response handler
  */
-export function* getRepos() {
+export function* getUserList() {
   // Select username from store
-  const username = yield select(makeSelectUsername());
-  const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
-  const options = {
-    headers: {
-      'Content-Type': 'application/vnd.github.v3.html'
-    }
-  };
+  let username = yield select(makeSelectUsername());
+  username = username.trim().replace(' ', '');
+  const requestURL = `https://api.github.com/search/users?q=${username}`;
 
   try {
     // Call our request helper (see 'utils/request')
-    const repos = yield call(request, [requestURL, options]);
-    yield put(reposLoaded(repos, username));
+    const users = yield call(request, requestURL);
+    yield put(userListLoaded(users, username));
   } catch (err) {
-    yield put(repoLoadingError(err));
-  }
-}
-
-export function* getReadme() {
-  // Select repo and username from store
-  const username = yield select(makeSelectUsername());
-  const repo = yield select(makeSelectRepo());
-  const requestURL = `https://api.github.com/repos/${username}/${repo}/readme`;
-
-  try {
-    // Call our request helper (see 'utils/request')
-    const readme = yield call(request, requestURL);
-    yield put(readmeLoaded(readme, username, repo));
-  } catch (err) {
-    yield put(readmeLoadingError(err));
+    yield put(userListLoadingError(err));
   }
 }
 
@@ -59,6 +38,5 @@ export default function* githubData() {
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
-  yield takeLatest(LOAD_REPOS, getRepos);
-  yield takeLatest(LOAD_README, getReadme);
+  yield takeLatest(LOAD_USER_LIST, getUserList);
 }

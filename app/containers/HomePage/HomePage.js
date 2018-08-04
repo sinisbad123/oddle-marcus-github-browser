@@ -12,59 +12,34 @@ import MarkdownRenderer from 'react-markdown-renderer';
 import './style.scss';
 
 export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-  /**
-   * when initial state username is not null, submit the form to load repos
-   */
+
   state = {};
 
-  componentWillMount() {
-    const match = this.props.match ? this.props.match : null;
-
-    if (match && match.params && match.params.id && match.params.repo) {
-      const username = match && match.params && match.params.id ? match.params.id : null;
-      const repo = match && match.params && match.params.repo ? match.params.repo : null;
-      this.props.onSetUsername(username);
-      this.props.onSetRepo(repo);
-      this.props.onFetchReadme();
-      return;
-    }
-
-    if (match && match.params && match.params.id) {
-      const username = match.params.id;
-      if (this.props.onSetUsername && this.props.onSubmitForm) {
-        this.props.onSetUsername(username);
+  onSubmitForm = (e) => {
+    e.preventDefault();
+    if (this.props.username && this.props.username.trim().length > 0) {
+      if (this.props.onSubmitForm) {
         this.props.onSubmitForm();
       }
     }
   }
 
-  componentDidMount() {
-    if (this.props.username && this.props.username.trim().length > 0) {
-      this.props.onSubmitForm();
-    }
-  }
-
-  onSubmitForm = (e) => {
-    e.preventDefault();
-    if (this.props.username && this.props.username.trim().length > 0) {
-      window.location.href = `/${this.props.username}`;
-    }
-  }
-
   renderReposList = () => {
-    const { loading, error, repos } = this.props;
-    const reposListProps = {
-      loading,
-      error,
-      repos,
-    };
+    const { loading, error, userList } = this.props;
+    // const reposListProps = {
+    //   loading,
+    //   error,
+    //   repos,
+    // };
+
+    console.log('userList', userList);
 
     return (
       <section>
         <h2>Fetch Github users!</h2>
         <form onSubmit={this.onSubmitForm}>
           <label htmlFor="username">
-          Show Github repositories by
+          Search Github users
             <span className="at-prefix">@</span>
             <input
               id="username"
@@ -75,7 +50,7 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
             />
           </label>
         </form>
-        <ReposList {...reposListProps} />
+        {/* <ReposList {...reposListProps} /> */}
       </section>
     );
   }
