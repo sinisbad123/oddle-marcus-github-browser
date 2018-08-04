@@ -15,6 +15,17 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
 
   state = {};
 
+  onChangeUsernameInput = (e) => {
+    const username = e.target.value;
+    if (this.props.onChangeUsername) {
+      this.props.onChangeUsername(e);
+    }
+
+    if (username && username.trim().length >= 3) {
+      this.props.onSubmitForm();
+    }
+  }
+
   onSubmitForm = (e) => {
     e.preventDefault();
     if (this.props.username && this.props.username.trim().length > 0) {
@@ -44,7 +55,7 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
               type="text"
               placeholder="sinisbad123"
               value={this.props.username}
-              onChange={this.props.onChangeUsername}
+              onChange={this.onChangeUsernameInput}
             />
           </label>
         </form>
