@@ -6,8 +6,14 @@
 ## Quick start
 
 1. Clone this repo
-3. Run `yarn` or `npm install` to install dependencies.<br />
-4. Run `npm start` or `yarn start` to see the app at `http://localhost:3000`.
+2. Run `yarn` or `npm install` to install dependencies.<br />
+3. Run `npm start` or `yarn start` to see the app at `http://localhost:3000`.
+
+## Deployment
+
+1. Run `yarn build` or `npm build`
+2. Edit `deploy` script of your `package.json` file
+3. Run `yarn deploy`
 
 Note: If `npm start` or `yarn start` returns a node-sass error, just run `npm rebuild node-sass` to rebuild node-sass for your current machine.
 
