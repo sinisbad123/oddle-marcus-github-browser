@@ -12,7 +12,7 @@ import {
 } from 'containers/App/actions';
 
 import request from 'utils/request';
-import { makeSelectUsername, makeSelectRepo } from 'containers/HomePage/selectors';
+import { makeSelectUsername, makeSelectRepo } from 'containers/UserPage/selectors';
 
 /**
  * Github repos request/response handler
@@ -40,6 +40,7 @@ export function* getReadme() {
   // Select repo and username from store
   const username = yield select(makeSelectUsername());
   const repo = yield select(makeSelectRepo());
+
   const requestURL = `https://api.github.com/repos/${username}/${repo}/readme`;
 
   try {
@@ -54,7 +55,7 @@ export function* getReadme() {
 /**
  * Root saga manages watcher lifecycle
  */
-export default function* githubData() {
+export default function* githubRepoData() {
   // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution

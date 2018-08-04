@@ -30,7 +30,7 @@ const makeSelectRepos = () => createSelector(
 
 const makeSelectUserList = () => createSelector(
   selectGlobal,
-  (globalState) => globalState.getIn(['userList'])
+  (globalState) => globalState.getIn('userList')
 );
 
 const makeSelectReadme = () => createSelector(

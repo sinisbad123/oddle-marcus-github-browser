@@ -41,7 +41,7 @@ function appReducer(state = initialState, action) {
       return state
         .set('loading', true)
         .set('error', false)
-        .setIn(['userList'], false)
+        .setIn('userList', false)
         .setIn(['userData', 'repositories'], false)
         .setIn(['userData', 'readme'], false);
     case LOAD_REPOS:
@@ -55,14 +55,14 @@ function appReducer(state = initialState, action) {
       return state
         .set('loading', true)
         .set('error', false)
-        .setIn(['userList'], false)
+        .setIn('userList', false)
         .setIn(['userData', 'repositories'], false)
         .setIn(['userData', 'readme'], false);
     case LOAD_USER_LIST_SUCCESS:
       return state
         .set('loading', false)
         .set('currentUser', action.username)
-        .setIn(['userList'], action.userList);
+        .setIn('userList', action.userList);
     case LOAD_REPOS_SUCCESS:
       return state
         .set('loading', false)

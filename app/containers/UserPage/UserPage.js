@@ -61,20 +61,10 @@ export default class UserPage extends React.PureComponent { // eslint-disable-li
 
     return (
       <section>
-        <h2>Fetch Github Repos by username!</h2>
-        <form onSubmit={this.onSubmitForm}>
-          <label htmlFor="username">
-          Show Github repositories by
-            <span className="at-prefix">@</span>
-            <input
-              id="username"
-              type="text"
-              placeholder="sinisbad123"
-              value={this.props.username}
-              onChange={this.props.onChangeUsername}
-            />
-          </label>
-        </form>
+        <a href="/">
+          Back to home
+        </a>
+        <h3>{`${this.props.username}'s repositories`}</h3>
         <ReposList {...reposListProps} />
       </section>
     );
@@ -122,7 +112,10 @@ export default class UserPage extends React.PureComponent { // eslint-disable-li
 }
 
 UserPage.propTypes = {
-  readme: PropTypes.object,
+  readme: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]),
   match: PropTypes.object,
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([

@@ -15,7 +15,7 @@
  *    }
  */
 
-import { CHANGE_USERNAME, CHANGE_REPO } from './constants';
+import { CHANGE_USERNAME } from './constants';
 
 /**
  * Changes the input field of the form
@@ -31,16 +31,3 @@ export function changeUsername(name) {
   };
 }
 
-/**
- * Changes the input field of the form
- *
- * @param  {repo} repo The new text of the input field
- *
- * @return {object}    An action object with a type of CHANGE_REPO
- */
-export function changeRepo(repo) {
-  return {
-    type: CHANGE_REPO,
-    repo
-  };
-}

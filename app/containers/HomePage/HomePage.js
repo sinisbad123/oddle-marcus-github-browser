@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import ReposList from 'components/ReposList';
+import UserList from 'components/UserList';
 import MarkdownRenderer from 'react-markdown-renderer';
 import './style.scss';
 
@@ -26,13 +26,11 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
 
   renderReposList = () => {
     const { loading, error, userList } = this.props;
-    // const reposListProps = {
-    //   loading,
-    //   error,
-    //   repos,
-    // };
-
-    console.log('userList', userList);
+    const userListProps = {
+      loading,
+      error,
+      items: userList && userList.items ? userList.items : null
+    };
 
     return (
       <section>
@@ -50,7 +48,7 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
             />
           </label>
         </form>
-        {/* <ReposList {...reposListProps} /> */}
+        <UserList {...userListProps} />
       </section>
     );
   }
@@ -104,8 +102,9 @@ HomePage.propTypes = {
     PropTypes.object,
     PropTypes.bool,
   ]),
-  repos: PropTypes.oneOfType([
+  userList: PropTypes.oneOfType([
     PropTypes.array,
+    PropTypes.object,
     PropTypes.bool,
   ]),
   repo: PropTypes.string,
