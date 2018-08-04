@@ -17,23 +17,41 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 import './style.scss';
 
-const App = () => (
-  <div className="app-wrapper">
-    <Helmet
-      titleTemplate="%s - Github browser and README scraper"
-      defaultTitle="A Oddle-Marcus web app"
-    >
-      <meta name="description" content="A Oddle-Marcus web app" />
-    </Helmet>
-    <Header />
-    <Switch>
-      <Route exact path="/" component={HomePage} />
-      <Route exact path="/:id" component={UserPage} />
-      <Route exact path="/:id/:repo" component={UserPage} />
-      <Route path="" component={NotFoundPage} />
-    </Switch>
-    <Footer />
-  </div>
-);
+class App extends React.Component {
+  state = {
+    selectedTheme: 'default',
+  };
+
+  onThemeChange = (theme) => {
+    this.setState({ selectedTheme: theme });
+  }
+
+  render() {
+    const selectedTheme = this.state.selectedTheme !== 'default'
+      ? 'mozillian-theme'
+      : '';
+    return (
+      <div className={`app-wrapper ${selectedTheme}`}>
+        <Helmet
+          titleTemplate="%s - Github browser and README scraper"
+          defaultTitle="A Oddle-Marcus web app"
+        >
+          <meta name="description" content="A Oddle-Marcus web app" />
+        </Helmet>
+        <Header
+          onThemeChange={this.onThemeChange}
+          selectedTheme={this.state.selectedTheme}
+        />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/:id" component={UserPage} />
+          <Route exact path="/:id/:repo" component={UserPage} />
+          <Route path="" component={NotFoundPage} />
+        </Switch>
+        <Footer />
+      </div>
+    );
+  }
+}
 
 export default App;
